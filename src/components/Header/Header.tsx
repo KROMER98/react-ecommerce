@@ -3,7 +3,7 @@ import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 const Header: React.FC<any> = () => {
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="dark" variant="dark" className="mb-4">
         <Container>
           <Navbar.Brand href="#home">TP E-commerce</Navbar.Brand>
           <Navbar.Toggle />
