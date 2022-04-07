@@ -7,6 +7,9 @@ const App: React.FC<any> = () => {
         <Col>
           <h4 className="mb-3">Catalogue en ligne</h4>
         </Col>
+        <Col className="text-end">
+          <span>Total : 1</span>
+        </Col>
       </Row>
       <Row>
         <Col lg={3}>
