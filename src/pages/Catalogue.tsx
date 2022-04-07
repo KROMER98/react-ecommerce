@@ -1,6 +1,13 @@
+import React from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 
 const App: React.FC<any> = () => {
+  // State
+  const [productList, setProductList] = React.useState<any[]>([])
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [hasError, setHasError] = React.useState<boolean>(false)
+
+  // Render
   return (
     <Container>
       <Row>
