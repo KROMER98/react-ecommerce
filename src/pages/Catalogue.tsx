@@ -42,7 +42,7 @@ const App: React.FC<any> = () => {
               <h4 className="mb-3">Catalogue en ligne</h4>
             </Col>
             <Col className="text-end">
-              <span>Total : 1</span>
+              <span>Total : {productList.length}</span>
             </Col>
           </Row>
           <Row>
