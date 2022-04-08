@@ -11,6 +11,7 @@ import {
 import AlertComponent from "../components/UI/Alert";
 import Loading from "../components/UI/Loading";
 import Title from "../components/UI/Title";
+import Cart from "./Cart";
 
 const Catalogue: React.FC<any> = () => {
   // State
@@ -73,16 +74,18 @@ const Catalogue: React.FC<any> = () => {
         (cartProduct: any) => cartProduct.id === product.id
       );
       const newList = [...cartProductList];
-      newList[index] = {
-        id: product.id,
-        name: product.name,
-        image: product.image,
-        description: product.description,
-        price: product.price,
-        qte: cartFilter[0].qte + 1,
-      };
-      decrStock(product);
-      setCartProductList(newList);
+      if (product.stock > 0) {
+        newList[index] = {
+          id: product.id,
+          name: product.name,
+          image: product.image,
+          description: product.description,
+          price: product.price,
+          qte: cartFilter[0].qte + 1,
+        };
+        decrStock(product);
+        setCartProductList(newList);
+      }
     }
   };
 
@@ -104,8 +107,6 @@ const Catalogue: React.FC<any> = () => {
       setProductList(newList);
     }
   };
-
-  console.log(cartProductList);
 
   // Render
   return (
@@ -165,6 +166,9 @@ const Catalogue: React.FC<any> = () => {
                 ))}
               </>
             )}
+          </Row>
+          <Row>
+            <Cart list={cartProductList} />
           </Row>
         </Container>
       )}
