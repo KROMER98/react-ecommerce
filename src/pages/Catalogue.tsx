@@ -8,6 +8,7 @@ import {
   Alert,
   Spinner,
 } from "react-bootstrap";
+import AlertComponent from "../components/UI/Alert";
 
 const App: React.FC<any> = () => {
   // State
@@ -41,18 +42,17 @@ const App: React.FC<any> = () => {
     },
   ]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [hasError, setHasError] = React.useState<boolean>(false);
+  const [hasError, setHasError] = React.useState<boolean>(true);
 
   // Render
   return (
     <>
       {hasError ? (
-        <Container>
-          <Alert variant="danger" className="text-center">
-            <Alert.Heading>Erreur du serveur</Alert.Heading>
-            <p>Veuillez réessayer plus tard.</p>
-          </Alert>
-        </Container>
+        <AlertComponent
+          title={"Erreur du serveur"}
+          text={"Veuillez réessayer plus tard."}
+          bg={"danger"}
+        />
       ) : (
         <Container>
           <Row>
