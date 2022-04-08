@@ -66,7 +66,7 @@ const Catalogue: React.FC<any> = () => {
         price: product.price,
         qte: 1,
       };
-      decrStock(product, index);
+      decrStock(product);
       setCartProductList([...cartProductList, newProductAddedToCart]);
     } else {
       const cartFilter = cartProductList.filter(
@@ -81,12 +81,16 @@ const Catalogue: React.FC<any> = () => {
         price: product.price,
         qte: cartFilter[0].qte + 1,
       };
-      decrStock(product, index);
+      decrStock(product);
       setCartProductList(newList);
     }
   };
 
-  const decrStock = (product: any, index: number) => {
+  const decrStock = (product: any) => {
+    const index = productList.findIndex(
+      (productP: any) => productP.id === product.id
+    );
+
     if (product.stock > 0) {
       const newList = [...productList];
       newList[index] = {
