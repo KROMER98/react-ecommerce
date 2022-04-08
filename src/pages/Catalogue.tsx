@@ -21,6 +21,24 @@ const App: React.FC<any> = () => {
       price: 1250,
       stock: 3,
     },
+    {
+      id: 2,
+      name: "Bracelet pour montre",
+      image: "bracelet.jpg",
+      description:
+        "Fullmosa Bracelet Cuir Montre Femme Homme Fixation Rapide, Axus Series Watch Bracelet. ",
+      price: 2990,
+      stock: 12,
+    },
+    {
+      id: 3,
+      name: "DVD BluRay",
+      image: "dvd.jpg",
+      description:
+        "DVD hyper top Musique MP3 Montre Enfants Fille Garçon. Musique MP3 Montre Enfants Fille Garçon.",
+      price: 3990,
+      stock: 10,
+    },
   ]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [hasError, setHasError] = React.useState<boolean>(false);
@@ -61,11 +79,11 @@ const App: React.FC<any> = () => {
             ) : (
               <>
                 {productList.map((product) => (
-                  <Col lg={3}>
+                  <Col key={product.id} lg={3}>
                     <Card>
                       <Card.Img
                         variant="top"
-                        src={"../src/assets/img/" + product.image}
+                        src={"../src/assets/img/products/" + product.image}
                         className="thumbnail p-3"
                       />
                       <Card.Body>
