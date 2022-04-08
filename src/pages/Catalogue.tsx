@@ -12,7 +12,7 @@ import AlertComponent from "../components/UI/Alert";
 import Loading from "../components/UI/Loading";
 import Title from "../components/UI/Title";
 
-const App: React.FC<any> = () => {
+const Catalogue: React.FC<any> = () => {
   // State
   const [productList, setProductList] = React.useState<any[]>([
     {
@@ -45,6 +45,39 @@ const App: React.FC<any> = () => {
   ]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [hasError, setHasError] = React.useState<boolean>(false);
+
+  const [counterCart, setCounterCart] = React.useState<number>(0);
+  const [cartProductList, setCartProductList] = React.useState<any>([
+    {
+      id_product: 1,
+      qte: 2,
+    },
+    {
+      id_product: 2,
+      qte: 1,
+    },
+  ]);
+
+  // Event
+  const handleAddToCart = (id_product: number) => {
+    setCounterCart(counterCart + 1); // A enregistrer dans l'état global
+
+    const index = cartProductList.findIndex(
+      (cart: any) => cart.id_product === id_product
+    );
+
+    if (index === -1) {
+      const newProductAddedToCart = { id_product: id_product, qte: 1 };
+      setCartProductList([...cartProductList, newProductAddedToCart]);
+    } else {
+      const cartFilter = cartProductList.filter(
+        (cart: any) => cart.id_product === id_product
+      );
+      const newList = [...cartProductList];
+      newList[index] = { id_product: id_product, qte: cartFilter[0].qte + 1 };
+      setCartProductList(newList);
+    }
+  };
 
   // Render
   return (
@@ -91,7 +124,12 @@ const App: React.FC<any> = () => {
                             <sup>F</sup>
                           </strong>
                         </Card.Text>
-                        <Button variant="primary">Ajouter au panier</Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => handleAddToCart(product.id)}
+                        >
+                          Ajouter au panier
+                        </Button>
                       </Card.Body>
                     </Card>
                   </Col>
@@ -105,4 +143,4 @@ const App: React.FC<any> = () => {
   );
 };
 
-export default App;
+export default Catalogue;
