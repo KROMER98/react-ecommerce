@@ -47,37 +47,61 @@ const Catalogue: React.FC<any> = () => {
   const [hasError, setHasError] = React.useState<boolean>(false);
 
   const [counterCart, setCounterCart] = React.useState<number>(0);
-  const [cartProductList, setCartProductList] = React.useState<any>([
-    {
-      id_product: 1,
-      qte: 2,
-    },
-    {
-      id_product: 2,
-      qte: 1,
-    },
-  ]);
+  const [cartProductList, setCartProductList] = React.useState<any>([]);
 
   // Event
-  const handleAddToCart = (id_product: number) => {
+  const handleAddToCart = (product: any) => {
     setCounterCart(counterCart + 1); // A enregistrer dans l'état global
 
     const index = cartProductList.findIndex(
-      (cart: any) => cart.id_product === id_product
+      (cartProduct: any) => cartProduct.id === product.id
     );
 
     if (index === -1) {
-      const newProductAddedToCart = { id_product: id_product, qte: 1 };
+      const newProductAddedToCart = {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        price: product.price,
+        qte: 1,
+      };
+      decrStock(product, index);
       setCartProductList([...cartProductList, newProductAddedToCart]);
     } else {
       const cartFilter = cartProductList.filter(
-        (cart: any) => cart.id_product === id_product
+        (cartProduct: any) => cartProduct.id === product.id
       );
       const newList = [...cartProductList];
-      newList[index] = { id_product: id_product, qte: cartFilter[0].qte + 1 };
+      newList[index] = {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        price: product.price,
+        qte: cartFilter[0].qte + 1,
+      };
+      decrStock(product, index);
       setCartProductList(newList);
     }
   };
+
+  const decrStock = (product: any, index: number) => {
+    if (product.stock > 0) {
+      const newList = [...productList];
+      newList[index] = {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        price: product.price,
+        stock: product.stock - 1,
+      };
+      setProductList(newList);
+    }
+  };
+
+  console.log(cartProductList);
 
   // Render
   return (
@@ -123,10 +147,11 @@ const Catalogue: React.FC<any> = () => {
                             {product.price}
                             <sup>F</sup>
                           </strong>
+                          <small>stock : {product.stock}</small>
                         </Card.Text>
                         <Button
                           variant="primary"
-                          onClick={() => handleAddToCart(product.id)}
+                          onClick={() => handleAddToCart(product)}
                         >
                           Ajouter au panier
                         </Button>
