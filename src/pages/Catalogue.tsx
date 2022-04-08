@@ -9,6 +9,8 @@ import {
   Spinner,
 } from "react-bootstrap";
 import AlertComponent from "../components/UI/Alert";
+import Loading from "../components/UI/Loading";
+import Title from "../components/UI/Title";
 
 const App: React.FC<any> = () => {
   // State
@@ -42,7 +44,7 @@ const App: React.FC<any> = () => {
     },
   ]);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [hasError, setHasError] = React.useState<boolean>(true);
+  const [hasError, setHasError] = React.useState<boolean>(false);
 
   // Render
   return (
@@ -56,28 +58,22 @@ const App: React.FC<any> = () => {
       ) : (
         <Container>
           <Row>
-            <Col>
-              <h4 className="mb-3">Catalogue en ligne</h4>
-            </Col>
+            <Title text={"Catalogue en ligne"} />
             <Col className="text-end">
               <span>Total : {productList.length}</span>
             </Col>
           </Row>
           <Row>
             {isLoading ? (
-              <div className="text-center mt-5 border py-3">
-                <Spinner
-                  animation="border"
-                  variant="primary"
-                  role="status"
-                  className="mx-auto"
-                >
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-                <p className="text-primary">Chargement des données</p>
-              </div>
+              <Loading text={"Chargement en cours..."} />
             ) : (
               <>
+                {!productList.length && (
+                  <>
+                    <AlertComponent text={"Aucune données..."} bg={"info"} />
+                  </>
+                )}
+
                 {productList.map((product) => (
                   <Col key={product.id} lg={3}>
                     <Card>
